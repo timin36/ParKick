@@ -1,8 +1,6 @@
 import React from 'react';
-import type {Node} from 'react';
 import {
   StyleSheet,
-  Text,
   View,
   Button,
 } from 'react-native';
@@ -11,6 +9,7 @@ import MapView from 'react-native-maps';
 
 const Home = ({navigation}) => {
 
+
   return (
     <View style = {{flex: 1}}>
     <MapView
@@ -18,8 +17,8 @@ const Home = ({navigation}) => {
       initialRegion={{
         latitude: 37.584061229881925,
         longitude: 127.05877709643458,
-        latitudeDelta: 0.0522,
-        longitudeDelta: 0.0221,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.002,
       }}
     />
     <View style = {styles.btn}>
