@@ -1,21 +1,27 @@
 import React from 'react';
-import type {Node} from 'react';
 import {
   StyleSheet,
   Text,
   View,
+  TextInput,
+  Button,
 } from 'react-native';
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
-      <View><Text>hohohohohoho</Text></View>
+      <View style = {{flex: 1}}>
+          <Text>ID</Text><TextInput style = {styles.txtinput}></TextInput>
+          <Text>PASSWORD</Text><TextInput></TextInput>
+          <Button title="login"
+              onPress={() => navigation.navigate('Recommend')}
+        />
+        
+        </View>
   );
 }
 const styles = StyleSheet.create({
-  Circle: {
-    position: 'absolute',
-    top: '70%',
-    left:'70%',
+  txtinput: {
+    backgroundColor: 'white',
     color:'black',
     fontSize: 20,
   },
