@@ -45,7 +45,7 @@ const Home = ({navigation}) => {
     <MapView.Marker
         coordinate={{latitude: location.latitude, 
                      longitude: location.longitude }}
-        title = {'A'}/>
+        title = {'Current Location'}/>
       </MapView>
     <View style = {styles.btn}>
       <Button title=" + "

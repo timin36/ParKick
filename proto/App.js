@@ -21,6 +21,7 @@ export default class App extends Component {
             <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Recommend" component={Recommend} />
             <Stack.Screen name="Input" component={Input} />
+            <Stack.Screen name="Circle" component={Circle} />
 
           </Stack.Navigator>
       </NavigationContainer>
