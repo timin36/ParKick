@@ -6,6 +6,7 @@ import Login from "./src/screens/Login";
 import Recommend from "./src/screens/Recommend";
 import Input from "./src/screens/Input";
 import Circle from "./src/components/Circle";
+import Parking from "./src/screens/Parking";
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default class App extends Component {
             <Stack.Screen name="Recommend" component={Recommend} />
             <Stack.Screen name="Input" component={Input} />
             <Stack.Screen name="Circle" component={Circle} />
+            <Stack.Screen name="Parking" component={Parking} />
 
           </Stack.Navigator>
       </NavigationContainer>

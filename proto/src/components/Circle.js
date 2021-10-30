@@ -10,6 +10,14 @@ import {
 import MapView from 'react-native-maps';
 import Marker from 'react-native-maps';
 
+mark = {
+  mark_name: null,
+  mark_coor: {
+    latitude: 0,
+    longitude: 0
+  },
+  tmp: null,
+}
 
 export default class Circle extends Component{
 
@@ -18,9 +26,7 @@ export default class Circle extends Component{
     return(
       <View style={{flex:1}}>
           <Button title="fetch" ></Button>
-          <ScrollView>
-              <Text>example</Text> 
-          </ScrollView>
+          <Text>mark example</Text>
       </View>
   );
   }

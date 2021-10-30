@@ -4,6 +4,7 @@ import {
   View,
   Button,
   Label,
+  Text,
 } from 'react-native';
 
 import MapView from 'react-native-maps';
@@ -19,17 +20,25 @@ const Home = ({navigation}) => {
   
   const [location,setLocation] = useState({"latitude" : 0 ,"longitude": 0});
 
-  locationAccess().then(()=>{console.log("permission check");})
+  locationAccess()//.then(()=>{console.log("permission check");})
 
   Geolocation.getCurrentPosition( 
-    pos => { console.log(pos.coords); 
+    pos => { //console.log(pos.coords); 
              setLocation(pos.coords);
             }, //pos.coords에 위치
     err => { console.log(err); },    //error 발생시 출력
     { enableHighAccuracy: true, timeout: 1000, maximumAge: 0, }, );
     //높은 정확도, timeout, 이전 저장값 사용 시 timeout
 
-  console.log(location);
+  //console.log(location);
+
+  const mark_1 = {
+    name: '시립대 주차존 01',
+    coordinate: {
+      latitude: 37.5840, 
+      longitude: 127.0587
+    }
+  }
 
   return (
     <View style = {{flex: 1}}>
@@ -45,7 +54,29 @@ const Home = ({navigation}) => {
     <MapView.Marker
         coordinate={{latitude: location.latitude, 
                      longitude: location.longitude }}
-        title = {'Current Location'}/>
+        title = {'현재 위치'}
+        pinColor = 'blue'/>
+
+    <MapView.Marker
+        coordinate={{latitude: 37.5840, 
+                     longitude: 127.0587 }}
+        title = {'ex'}
+        onCalloutPress={()=>navigation.navigate('Parking',{
+          name: mark_1.name,
+          coordinate: {
+            latitude: mark_1.coordinate.latitude, 
+            longitude: mark_1.coordinate.longitude
+          } //나중에 api연결하면 변수 치환
+        })}>
+        <MapView.Callout tooltip={true}>
+          <View style={styles.pop}>
+            <Text>{mark_1.name}</Text>
+            <Text>☆ 13</Text>
+            <Text>description 01</Text>
+          </View>
+        </MapView.Callout>
+      </MapView.Marker>
+
       </MapView>
     <View style = {styles.btn}>
       <Button title=" + "
@@ -66,8 +97,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 30,
     bottom: 40,
+  },
+  pop: {
+    backgroundColor : 'white',
+ //   paddingtop: 5,
+    padding: 5
   }
-
 });
 
 export default Home;
