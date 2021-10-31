@@ -11,7 +11,7 @@ const Login = ({navigation}) => {
   return (
       <View style = {{flex: 1}}>
           <Text>ID</Text><TextInput style = {styles.txtinput}></TextInput>
-          <Text>PASSWORD</Text><TextInput style = {styles.txtinput}></TextInput>
+          <Text>PASSWORD</Text><TextInput style = {styles.txtinput} secureTextEntry={true} ></TextInput>
           <Button title="login"
               onPress={() => navigation.navigate('Recommend')}
         />

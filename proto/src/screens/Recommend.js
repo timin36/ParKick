@@ -18,10 +18,12 @@ import Poi from '../../assets/imges/poi.jpg'
 const Recommend = ({navigation}) => {
 
   const [poi,setpoi] = useState(null);
+  const [checked, setChecked] = useState(false);
 
   clickpoint=(e)=>{
     const point = e.nativeEvent
     setpoi(point);
+    setChecked(true);
   }
 
     return (
@@ -64,9 +66,15 @@ const Recommend = ({navigation}) => {
           )}
 
       </MapView>
-        <Button title="recommend" //style = {styles.btn}
-              onPress={() => navigation.navigate('Input')}
-        />
+      {checked && (
+        <View style = {styles.btn}>
+      <Button title="P"
+              onPress={() => navigation.navigate('Input',{
+                point: poi.coordinate
+              })}
+      />
+    </View>
+      )}
         </View>
   );
 }
@@ -74,19 +82,19 @@ const Recommend = ({navigation}) => {
 const styles = StyleSheet.create({
   main_map: {
     width: '100%',
-    height: '94%',
+    height: '100%',
   },
   pop: {
     backgroundColor : 'white',
  //   paddingtop: 5,
     padding: 5
+  },
+  btn:{
+    position: 'absolute',
+    right: 30,
+    bottom: 40,
+    fontSize: 20,
   }
-  // btn:{
-  //   position: "absolute",
-  //   bottom: 5,
-  //   width: '100%',
-  //   fontSize: 20,
-  // }
 });
 
 export default Recommend

@@ -72,11 +72,41 @@ const Home = ({navigation}) => {
         <MapView.Callout tooltip={true}>
           <View style={styles.pop}>
             <Text>{mark_1.name}</Text>
-            <Text>☆ 13</Text>
+            <Text>☆ 5</Text>
             <Text>description 01</Text>
           </View>
         </MapView.Callout>
       </MapView.Marker>
+
+
+      <MapView.Marker
+        coordinate={{latitude: 37.583073, 
+                     longitude: 127.059362 }}
+        title = {'ex2'} >
+        <MapView.Callout tooltip={true}>
+          <View style={styles.pop}>
+            <Text>시립대 주차존 02</Text>
+            <Text>☆ 13</Text>
+            <Text>description 02</Text>
+          </View>
+        </MapView.Callout>
+        </MapView.Marker>
+        <MapView.Marker
+        coordinate={{latitude: 37.583389, 
+                     longitude: 127.05779939 }}
+        title = {'ex3'} >
+        <MapView.Callout tooltip={true}>
+          <View style={styles.pop}>
+            <Text>시립대 주차존 03</Text>
+            <Text>☆ 7</Text>
+            <Text>description 03</Text>
+          </View>
+        </MapView.Callout>
+        </MapView.Marker>
+
+
+
+
 
       </MapView>
     <View style = {styles.btn}>
