@@ -66,7 +66,8 @@ const Home = ({navigation}) => {
           coordinate: {
             latitude: mark_1.coordinate.latitude, 
             longitude: mark_1.coordinate.longitude
-          } //나중에 api연결하면 변수 치환
+          }, //나중에 api연결하면 변수 치환
+          login: false
         })}>
         <MapView.Callout tooltip={true}>
           <View style={styles.pop}>

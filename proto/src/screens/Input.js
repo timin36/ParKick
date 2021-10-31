@@ -9,7 +9,7 @@ import {
 const Input = ({navigation}) => {
     return (
       <View>
-        <Text>isjfeijifl</Text>
+        <Text>내용을 입력해주세요</Text>
        
           
         

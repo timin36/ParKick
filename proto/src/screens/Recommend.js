@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -16,6 +16,14 @@ import Poi from '../../assets/imges/poi.jpg'
 
 
 const Recommend = ({navigation}) => {
+
+  const [poi,setpoi] = useState(null);
+
+  clickpoint=(e)=>{
+    const point = e.nativeEvent
+    setpoi(point);
+  }
+
     return (
       <View>
         <MapView
@@ -25,7 +33,9 @@ const Recommend = ({navigation}) => {
           longitude: 127.05877709643458,
           latitudeDelta: 0.005,
           longitudeDelta: 0.002,
-        }} >
+          }} 
+          onPress = {clickpoint}
+          >
         <MapView.Marker
         coordinate={{latitude: 37.5840, 
                      longitude: 127.0587 }}
@@ -35,7 +45,8 @@ const Recommend = ({navigation}) => {
           coordinate: {
             latitude: 37.5840, 
             longitude: 127.0587
-          }
+          },
+          login: true
         })}>
         <MapView.Callout tooltip={true}>
           <View style={styles.pop}>
@@ -45,6 +56,13 @@ const Recommend = ({navigation}) => {
           </View>
         </MapView.Callout>
         </MapView.Marker>
+
+        {poi && (
+            <MapView.Marker coordinate={poi.coordinate}
+            pinColor = 'blue'
+            />
+          )}
+
       </MapView>
         <Button title="recommend" //style = {styles.btn}
               onPress={() => navigation.navigate('Input')}
