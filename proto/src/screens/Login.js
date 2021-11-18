@@ -13,9 +13,8 @@ const Login = ({navigation}) => {
           <Text>ID</Text><TextInput style = {styles.txtinput}></TextInput>
           <Text>PASSWORD</Text><TextInput style = {styles.txtinput} secureTextEntry={true} ></TextInput>
           <Button title="login"
-              onPress={() => navigation.navigate('Recommend')}
+              onPress={() => navigation.reset({routes: [{name: 'Recommend'}]})}
         />
-        
         </View>
   );
 }
