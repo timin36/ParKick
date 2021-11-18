@@ -1,0 +1,24 @@
+[
+        {   
+            "_id":"siejfh6584848",
+            "lotid": 1,
+            "latitude":37.5840,
+            "longitude":127.0587,
+            "rate": {
+                "_id":"siejfh6584848",
+                "like": 5,
+                "dislike": 1
+            }
+        },
+        {  
+            "_id":"siejfwddw223dw8",
+            "lotid":2,
+            "latitude":37.583389,
+            "longitude":127.05779939,
+            "rate": {
+                "_id":"siejfwddw223dw8",
+                "like": 4,
+                "dislike": 5
+            }
+        }
+]        

@@ -1,15 +1,16 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   View,
   Button,
-  Label,
   Text,
 } from 'react-native';
 
 import MapView from 'react-native-maps';
 import { Permission , PERMISSION_TYPE } from '../AppPermission';
 import Geolocation from '@react-native-community/geolocation';
+import parklots from './poi.json';
+
 
 async function locationAccess () {
     Permission.checkPermission(PERMISSION_TYPE.location)//.then((value)=>{console.log("checkPermission value: ",value);})
@@ -33,12 +34,9 @@ const Home = ({navigation}) => {
   //console.log(location);
 
   const mark_1 = {
-    name: '시립대 주차존 01',
-    coordinate: {
-      latitude: 37.5840, 
-      longitude: 127.0587
-    }
+    name: '시립대 주차존',
   }
+ // 주차존 이름 deault string 
 
   return (
     <View style = {{flex: 1}}>
@@ -57,55 +55,34 @@ const Home = ({navigation}) => {
         title = {'현재 위치'}
         pinColor = 'blue'/>
 
-    <MapView.Marker
-        coordinate={{latitude: 37.5840, 
-                     longitude: 127.0587 }}
-        title = {'ex'}
-        onCalloutPress={()=>navigation.navigate('Parking',{
-          name: mark_1.name,
-          coordinate: {
-            latitude: mark_1.coordinate.latitude, 
-            longitude: mark_1.coordinate.longitude
-          }, //나중에 api연결하면 변수 치환
-          login: false
-        })}>
-        <MapView.Callout tooltip={true}>
-          <View style={styles.pop}>
-            <Text>{mark_1.name}</Text>
-            <Text>☆ 5</Text>
-            <Text>description 01</Text>
-          </View>
-        </MapView.Callout>
-      </MapView.Marker>
-
-
-      <MapView.Marker
-        coordinate={{latitude: 37.583073, 
-                     longitude: 127.059362 }}
-        title = {'ex2'} >
-        <MapView.Callout tooltip={true}>
-          <View style={styles.pop}>
-            <Text>시립대 주차존 02</Text>
-            <Text>☆ 13</Text>
-            <Text>description 02</Text>
-          </View>
-        </MapView.Callout>
+      {parklots.map(park=> {
+        return(
+          <MapView.Marker
+            coordinate={{latitude: park.latitude, 
+                     longitude: park.longitude }}
+            key = {park.lotid} 
+            onCalloutPress={()=>navigation.navigate('Parking',{
+              name: mark_1.name,
+              lotid: park.lotid,
+              coordinate: {
+              latitude: park.latitude, 
+              longitude: park.longitude
+              },
+              like:park.rate.like,
+              dislike:park.rate.dislike,
+              login: false
+            })} >
+          <MapView.Callout tooltip={true}>
+            <View style={styles.pop}>
+              <Text>{mark_1.name} {park.lotid}</Text>
+              <Text>☆ {park.rate.like}</Text>
+              <Text>description {park.lotid}</Text>
+            </View>
+          </MapView.Callout>
         </MapView.Marker>
-        <MapView.Marker
-        coordinate={{latitude: 37.583389, 
-                     longitude: 127.05779939 }}
-        title = {'ex3'} >
-        <MapView.Callout tooltip={true}>
-          <View style={styles.pop}>
-            <Text>시립대 주차존 03</Text>
-            <Text>☆ 7</Text>
-            <Text>description 03</Text>
-          </View>
-        </MapView.Callout>
-        </MapView.Marker>
+        )
 
-
-
+      })}
 
 
       </MapView>

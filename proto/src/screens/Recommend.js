@@ -3,17 +3,12 @@ import {
   StyleSheet,
   Text,
   View,
-  TextInput,
   Button,
-  TouchableOpacity,
-  TouchableHighlight,
-  Image,
 } from 'react-native';
 
 import MapView from 'react-native-maps';
-import { Callout, Marker } from 'react-native-maps';
-import Poi from '../../assets/imges/poi.jpg'
-
+import Poi from '../../assets/imges/poi.jpg' //마커 이미지 import
+import parklots from './poi.json';
 
 const Recommend = ({navigation}) => {
 
@@ -24,6 +19,10 @@ const Recommend = ({navigation}) => {
     const point = e.nativeEvent
     setpoi(point);
     setChecked(true);
+  }
+
+  const mark_1 = {
+    name: '시립대 주차존',
   }
 
     return (
@@ -38,26 +37,34 @@ const Recommend = ({navigation}) => {
           }} 
           onPress = {clickpoint}
           >
-        <MapView.Marker
-        coordinate={{latitude: 37.5840, 
-                     longitude: 127.0587 }}
-        title = {'ex'}
-        onCalloutPress={()=>navigation.navigate('Parking',{
-          name: '시립대 주차존 01',  //나중에 api연결하면 변수 치환
-          coordinate: {
-            latitude: 37.5840, 
-            longitude: 127.0587
-          },
-          login: true
-        })}>
-        <MapView.Callout tooltip={true}>
-          <View style={styles.pop}>
-            <Text>시립대 주차존 01</Text>
-            <Text>☆ 13</Text>
-            <Text>description 01</Text>
-          </View>
-        </MapView.Callout>
+        {parklots.map(park=> {
+        return(
+          <MapView.Marker
+            coordinate={{latitude: park.latitude, 
+                     longitude: park.longitude }}
+            key = {park.lotid} 
+            onCalloutPress={()=>navigation.navigate('Parking',{
+              name: mark_1.name,
+              lotid: park.lotid,
+              coordinate: {
+              latitude: park.latitude, 
+              longitude: park.longitude
+              },
+              like:park.rate.like,
+              dislike:park.rate.dislike,
+              login: true
+            })} >
+          <MapView.Callout tooltip={true}>
+            <View style={styles.pop}>
+              <Text>{mark_1.name} {park.lotid}</Text>
+              <Text>☆ {park.rate.like}</Text>
+              <Text>description {park.lotid}</Text>
+            </View>
+          </MapView.Callout>
         </MapView.Marker>
+        )
+
+      })}
 
         {poi && (
             <MapView.Marker coordinate={poi.coordinate}

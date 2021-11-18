@@ -1,23 +1,30 @@
-import React,{Component, useState} from 'react';
+import React,{Component} from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  Button,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class Parking extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      count_like : props.route.params.like,
+      count_dislike : props.route.params.dislike
+    }
+  }
  
   state = {
     like: false,
     dislike: false,
-    count_like: 5,
-    count_dislike: 1,
+    count_like: 0,
+    count_dislike: 0,
   };
+  
   setLike = () => {
     this.setState({
       like: !(this.state.like),
