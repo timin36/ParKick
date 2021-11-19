@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Comment from '../components/Comment'
 
 export default class Parking extends Component {
 
@@ -41,7 +42,7 @@ export default class Parking extends Component {
     const p_name = this.props.route.params.name
     const coor = this.props.route.params.coordinate
     const login = this.props.route.params.login
-     
+    const lotid = this.props.route.params.lotid
     //{p_name}
     //{coor.latitude} | {coor.longitude}
     return (
@@ -66,7 +67,7 @@ export default class Parking extends Component {
             <Text> {this.state.count_dislike}</Text>
           </Text>
           }
-          <Text style = {styles.mid}>내용</Text>
+          <Text style = {styles.mid}><Comment num={lotid} /></Text>
           { login && 
           <TouchableOpacity style = {styles.to} onPress = {()=>this.props.navigation.push('Review')}><Text style = {styles.but}>평가 등록</Text></TouchableOpacity>
           }

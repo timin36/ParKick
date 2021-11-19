@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,30 +7,57 @@ import {
   ScrollView,
 } from 'react-native';
 
-import MapView from 'react-native-maps';
+import Comment from './Comment'
 import Marker from 'react-native-maps';
 
-mark = {
-  mark_name: null,
-  mark_coor: {
-    latitude: 0,
-    longitude: 0
-  },
-  tmp: null,
+const Circle = () => {
+
+
+  return(
+    <View>
+      <Text>뭐 되는게 없네</Text>
+      <Comment num={2} />
+    </View>
+  )
 }
 
-export default class Circle extends Component{
+// export default class Circle extends Component {
 
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//         dat: null
+//     }
+//   }
 
-  render(){
-    return(
-      <View style={{flex:1}}>
-          <Button title="fetch" ></Button>
-          <Text>mark example</Text>
-      </View>
-  );
-  }
-}
+//   componentDidMount() {
+//     fetch('http://118.67.131.50/parklots/no/2')
+//         .then(res => res.json())
+//         .then(data => {console.log(data);
+//           this.setState({dat : data})
+//         });
+//   }
+
+//   render(){
+
+//     const { Circle } = this.state;
+//     const commentList = Circle.map(park=>{
+//         <Text>
+//         {park._id}
+//         </Text>
+//     });
+
+//     return(
+//       <View><Text>gk TLqkf</Text>
+//       <Button title = "press"></Button>
+//         {commentList}
+//       </View>
+//     )
+
+//   }
+
+// }
+
 
 
 const styles = StyleSheet.create({
@@ -42,3 +69,4 @@ const styles = StyleSheet.create({
   text:{padding:8, color:'white'}, 
 });
 
+export default Circle;

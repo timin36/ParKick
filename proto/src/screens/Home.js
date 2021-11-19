@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -9,7 +9,6 @@ import {
 import MapView from 'react-native-maps';
 import { Permission , PERMISSION_TYPE } from '../AppPermission';
 import Geolocation from '@react-native-community/geolocation';
-import parklots from './poi.json';
 
 
 async function locationAccess () {
@@ -20,6 +19,7 @@ async function locationAccess () {
 const Home = ({navigation}) => {
   
   const [location,setLocation] = useState({"latitude" : 0 ,"longitude": 0});
+  const [parklots, setParklots] = useState([]);
 
   locationAccess()//.then(()=>{console.log("permission check");})
 
@@ -37,6 +37,17 @@ const Home = ({navigation}) => {
     name: '시립대 주차존',
   }
  // 주차존 이름 deault string 
+
+ useEffect(() => {
+  const url = 'http://118.67.131.50/parklots';
+  fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setParklots(data);
+      });
+}, []); 
+
+////////////////////////////////////////////splash 만들면 옮길거
 
   return (
     <View style = {{flex: 1}}>
@@ -58,8 +69,8 @@ const Home = ({navigation}) => {
       {parklots.map(park=> {
         return(
           <MapView.Marker
-            coordinate={{latitude: park.latitude, 
-                     longitude: park.longitude }}
+            coordinate={{latitude: Number(park.longitude), 
+                     longitude: Number(park.latitude)}}
             key = {park.lotid} 
             onCalloutPress={()=>navigation.navigate('Parking',{
               name: mark_1.name,
