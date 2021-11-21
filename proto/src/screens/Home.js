@@ -69,8 +69,8 @@ const Home = ({navigation}) => {
       {parklots.map(park=> {
         return(
           <MapView.Marker
-            coordinate={{latitude: Number(park.longitude), 
-                     longitude: Number(park.latitude)}}
+            coordinate={{latitude: park.latitude, 
+                     longitude: park.longitude}}
             key = {park.lotid} 
             onCalloutPress={()=>navigation.navigate('Parking',{
               name: mark_1.name,
