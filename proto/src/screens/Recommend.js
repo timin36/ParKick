@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,12 +8,12 @@ import {
 
 import MapView from 'react-native-maps';
 import Poi from '../../assets/imges/poi.jpg' //마커 이미지 import
-import parklots from './poi.json';
 
 const Recommend = ({navigation}) => {
 
   const [poi,setpoi] = useState(null);
   const [checked, setChecked] = useState(false);
+  const [parklots, setParklots] = useState([]);
 
   clickpoint=(e)=>{
     const point = e.nativeEvent
@@ -22,8 +22,17 @@ const Recommend = ({navigation}) => {
   }
 
   const mark_1 = {
-    name: '시립대 주차존',
+    name: '시립대 주차장',
   }
+
+  useEffect(() => {
+    const url = 'http://118.67.131.50/parklots';
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          setParklots(data);
+        });
+  }, []); 
 
     return (
       <View>

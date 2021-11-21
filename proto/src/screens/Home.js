@@ -39,12 +39,15 @@ const Home = ({navigation}) => {
  // 주차존 이름 deault string 
 
  useEffect(() => {
+  const abort_ = new AbortController;
+
   const url = 'http://118.67.131.50/parklots';
-  fetch(url)
+  fetch(url,{signal : abort_.signal})
       .then((response) => response.json())
       .then((data) => {
         setParklots(data);
       });
+   return () => abort_.abort();  
 }, []); 
 
 ////////////////////////////////////////////splash 만들면 옮길거

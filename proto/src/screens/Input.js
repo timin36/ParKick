@@ -5,7 +5,10 @@ import {
   View,
   TextInput,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
+  ToastAndroid,
+  Platform,
+  AlertIOS,
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
@@ -20,13 +23,14 @@ const Input = ({navigation}) => {
     //{point.latitude} | {point.longitude}
     const [selected_1,setSelect1] = useState(false);
     const [selected_2,setSelect2] = useState(false);
-
+    const [parkname,setParkname] = useState("");
 
     return (
       <View style = {styles.main}>
         <TextInput
         style={styles.name}
-        placeholder="주차장 이름"/>
+        placeholder="주차장 이름"
+        onChangeText={(parkname)=>{setParkname(parkname)}}/>
         <Text style={{lineHeight: 10}}>{"\n"}</Text>
        <View style = {styles.mapwra}>
        <MapView
@@ -49,10 +53,43 @@ const Input = ({navigation}) => {
          <Text style = {styles.name_1}>주차장 추천</Text><CheckBox value={selected_1} onValueChange ={setSelect1}/> 
          <Text style = {styles.name_1}>주차장 금지</Text><CheckBox value={selected_2} onValueChange ={setSelect2}/>
        </View>
-       <TouchableOpacity style = {styles.to} onPress = {()=>navigation.pop()}><Text style = {styles.but}>등록</Text></TouchableOpacity>
+       <TouchableOpacity style = {styles.to} onPress = {()=>{
+                                                            if(selected_1 && !selected_2) {send_zone(poi.latitude, poi.longitude,parkname); navigation.pop(); }
+                                                            else if(selected_2 && !selected_1) {console.log("금!지!"); navigation.pop(); }
+                                                            else if(!selected_2 && !selected_1) checkexception('주차장 추천/금지를 선택해주세요');
+                                                            else if(selected_2 && selected_1) checkexception('추천과 금지는 하나만 선택할 수 있습니다')}}>
+      <Text style = {styles.but}>등록</Text></TouchableOpacity>
       </View>
   );
 }
+
+function send_zone(lat, lon, name){
+  fetch('http://118.67.131.50/zones', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      zoneid: name,
+      latitude: lat,
+      longitude: lon
+    })})
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+    });
+}
+
+function checkexception(msg){
+  if (Platform.OS === 'android') {
+    ToastAndroid.show(msg, ToastAndroid.SHORT)
+  } else {
+    AlertIOS.alert(msg);
+  }
+}
+
+
 
 const styles = StyleSheet.create({
   main:{
