@@ -41,7 +41,7 @@ const Recommend = ({navigation}) => {
           initialRegion={{
           latitude: 37.584061229881925,
           longitude: 127.05877709643458,
-          latitudeDelta: 0.005,
+          latitudeDelta: 0.002,
           longitudeDelta: 0.002,
           }} 
           onPress = {clickpoint}
@@ -55,6 +55,7 @@ const Recommend = ({navigation}) => {
             onCalloutPress={()=>navigation.navigate('Parking',{
               name: mark_1.name,
               lotid: park.lotid,
+              _id: park._id,
               coordinate: {
               latitude: park.latitude, 
               longitude: park.longitude
@@ -84,14 +85,14 @@ const Recommend = ({navigation}) => {
       </MapView>
       {checked && (
         <View style = {styles.btn}>
-      <Button title="P"
+      <Button title="Park"
               onPress={() => navigation.navigate('Input',{
                 point: poi.coordinate
               })}
       />
     </View>
       )}
-        </View>
+    </View>
   );
 }
 //<Image source = {Poi} /> 마커 크기 자체를 맞추는게 나을듯
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     right: 30,
     bottom: 40,
     fontSize: 20,
-  }
+  },
 });
 
 export default Recommend

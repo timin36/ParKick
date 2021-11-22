@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -9,14 +9,22 @@ import {
 
 import Comment from './Comment'
 import Marker from 'react-native-maps';
-
+import MapView from 'react-native-maps';
 const Circle = () => {
 
 
   return(
     <View>
       <Text>뭐 되는게 없네</Text>
-      <Comment num={2} />
+      <MapView 
+        style = {styles.main_map}
+        initialRegion={{
+        latitude: 37.584061229881925,
+        longitude: 127.05877709643458,
+        latitudeDelta: 0.005,
+        longitudeDelta: 0.002,
+      }}
+      />
     </View>
   )
 }

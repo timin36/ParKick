@@ -13,6 +13,7 @@ import {
 import { useRoute } from '@react-navigation/native';
 import CheckBox from '@react-native-community/checkbox';
 import MapView from 'react-native-maps';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Input = ({navigation}) => {
 
@@ -23,15 +24,15 @@ const Input = ({navigation}) => {
     //{point.latitude} | {point.longitude}
     const [selected_1,setSelect1] = useState(false);
     const [selected_2,setSelect2] = useState(false);
-    const [parkname,setParkname] = useState("");
 
     return (
       <View style = {styles.main}>
-        <TextInput
-        style={styles.name}
-        placeholder="주차장 이름"
-        onChangeText={(parkname)=>{setParkname(parkname)}}/>
-        <Text style={{lineHeight: 10}}>{"\n"}</Text>
+        <MaterialCommunityIcons 
+        style = {styles.cancel}
+        name = "arrow-left-circle-outline" size={30} 
+        onPress={() => navigation.pop()} />
+        <Text style= {styles.name}>주차장 추천</Text>
+        <Text style={{lineHeight: 0}}>{"\n"}</Text>
        <View style = {styles.mapwra}>
        <MapView
         style = {styles.map}
@@ -48,14 +49,14 @@ const Input = ({navigation}) => {
         <Image source= {require('../../assets/imges/poi.jpg')} style={{ width: 15, height: 15 }} />
         </MapView.Marker>
         </MapView></View>
-        <Text style={{lineHeight: 5}}>{"\n"}</Text> 
+        <Text style={{fontSize: 3}}>{"\n"}</Text> 
        <View style = {styles.wrapper}>
          <Text style = {styles.name_1}>주차장 추천</Text><CheckBox value={selected_1} onValueChange ={setSelect1}/> 
          <Text style = {styles.name_1}>주차장 금지</Text><CheckBox value={selected_2} onValueChange ={setSelect2}/>
        </View>
        <TouchableOpacity style = {styles.to} onPress = {()=>{
-                                                            if(selected_1 && !selected_2) {send_zone(poi.latitude, poi.longitude,parkname); navigation.pop(); }
-                                                            else if(selected_2 && !selected_1) {console.log("금!지!"); navigation.pop(); }
+                                                            if(selected_1 && !selected_2) {send_zone(poi.latitude, poi.longitude,selected_1); navigation.pop(); checkexception('추천 되었습니다!'); }
+                                                            else if(selected_2 && !selected_1) {send_zone(poi.latitude, poi.longitude,selected_1); navigation.pop(); checkexception('금지 추천 되었습니다!') }
                                                             else if(!selected_2 && !selected_1) checkexception('주차장 추천/금지를 선택해주세요');
                                                             else if(selected_2 && selected_1) checkexception('추천과 금지는 하나만 선택할 수 있습니다')}}>
       <Text style = {styles.but}>등록</Text></TouchableOpacity>
@@ -63,7 +64,7 @@ const Input = ({navigation}) => {
   );
 }
 
-function send_zone(lat, lon, name){
+function send_zone(lat, lon, select){
   fetch('http://118.67.131.50/zones', {
     method: 'POST',
     headers: {
@@ -71,7 +72,7 @@ function send_zone(lat, lon, name){
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      zoneid: name,
+      suggest: select,
       latitude: lat,
       longitude: lon
     })})
@@ -84,7 +85,7 @@ function send_zone(lat, lon, name){
 function checkexception(msg){
   if (Platform.OS === 'android') {
     ToastAndroid.show(msg, ToastAndroid.SHORT)
-  } else {
+  } else if(Platform.OS === 'ios') {
     AlertIOS.alert(msg);
   }
 }
@@ -112,12 +113,10 @@ const styles = StyleSheet.create({
     overflow: 'hidden'
   },
   name: {
-    width: '80%',
+    position: 'relative',
+    top: '-2%',
+    width: '50%',
     fontSize: 25,
-    borderWidth: 1,
-    borderColor: '#4EA6D9',
-    borderRadius: 20,
-    backgroundColor: 'white',
     overflow: 'hidden',
     textAlign: 'center',
     marginTop: 10,
@@ -131,7 +130,7 @@ const styles = StyleSheet.create({
     width: '80%',
     borderWidth: 1,
     borderColor: '#4EA6D9',
-    borderRadius: 20,
+    borderRadius: 10,
     backgroundColor: 'white',
     alignItems: "center",
     justifyContent: "center",
@@ -156,6 +155,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     paddingTop: 7
-  }
+  },
+  cancel:{
+    position: 'absolute',
+    top: 20,
+    left: 20
+},
 });
 export default Input

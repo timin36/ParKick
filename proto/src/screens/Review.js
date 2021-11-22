@@ -1,24 +1,69 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
+  ToastAndroid,
+  Platform,
+  AlertIOS,
 } from 'react-native';
+import { useRoute } from '@react-navigation/native';
+import SubmitCom from '../components/submitCom'
+
 
 const Review = ({navigation}) => {
+
+  const route = useRoute();
+  const lotid = route.params.lotid;
+
+  const [com,setCom] = useState("");
+  const [userID,setUserID] = useState('예시'); 
+
     return (
       <View style={styles.main}>
         <TextInput
         style={styles.input}
         placeholder="내용을 입력해주세요"
+        onChangeText={(com)=>{setCom(com)}}
         numberOfLines={10}
         multiline
         />
-        <TouchableOpacity style = {styles.to} onPress = {()=>navigation.pop()}><Text style = {styles.but}>평가 등록</Text></TouchableOpacity>
+        <TouchableOpacity style = {styles.to} onPress = {()=>{ subCom(lotid, com, userID);
+                                                               toastMsg('코멘트가 등록되었습니다.');
+                                                               navigation.reset({routes: [{name: 'Recommend'}]}) }} >
+         <Text style = {styles.but}>평가 등록</Text></TouchableOpacity>
         </View>
   );
+}
+
+function subCom(lotid, com, userID){
+  fetch('http://118.67.131.50/parklots/com', {
+    method: 'POST',
+    headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+     },
+        body: JSON.stringify({
+        no: lotid,
+        user: userID,
+        comment: com
+     })})
+    .then((response) => response.json())
+    .then((data) => {
+    console.log(data);
+    })
+    .catch(console.log('코멘트안써짐 지금'));  
+
+}
+
+function toastMsg(msg){
+  if (Platform.OS === 'android') {
+    ToastAndroid.show(msg, ToastAndroid.SHORT)
+  } else {
+    AlertIOS.alert(msg);
+  }
 }
 
 const styles = StyleSheet.create({
